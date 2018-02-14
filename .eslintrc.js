@@ -1,7 +1,11 @@
 module.exports = {
   extends: "airbnb-base",
   rules: {
-    "import/prefer-default-export": false
+    "import/prefer-default-export": false,
+    "padded-blocks": 0,
+    "no-use-before-define": 0,
+    "no-plusplus": 0,
+    // "array-element-newline": 0
   },
   globals: {
     remove: true,

@@ -7,7 +7,7 @@
 ## The Browser
 
 * Chrome
-* Chrome Development Tools
+* Chrome Development Tools (keep console open!)
 * Firefox?
 
 ## The Editor
@@ -21,12 +21,12 @@
 
 ## Extensions
 
-* ESLint
-* Prettier
-* Live Server
-* Bracket Pair Colorizer
 * Atom Keymap
+* Beautify
+* Bracket Pair Colorizer
 * Debugger for Chrome
+* ESLint
+* Live Server
 
 ## CLI Tools
 
@@ -52,6 +52,7 @@ npm install -g eslint-config-airbnb-base
 * donkey.code-workspace
 * package.json `npm init`
 * .eslintrc.js
+* .jsbeautifyrc
 
 # Dependencies
 
