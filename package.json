@@ -1,0 +1,12 @@
+{
+  "name": "donkey_demo",
+  "version": "0.0.0",
+  "description": "An indecisive donkey",
+  "main": "donkey.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Bakse",
+  "license": "UNLICENSED",
+  "devDependencies": {}
+}
