@@ -6,14 +6,12 @@ const foodLocations = [
 
 const donkeyLocation = [100, 100];
 
-// eslint-disable-next-line
 function setup() {
   createCanvas(500, 500);
   background(0, 0, 0);
   noStroke();
 }
 
-// eslint-disable-next-line
 function draw() {
   for (let i = 0; i < 100; ++i) {
     step();

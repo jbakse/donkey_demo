@@ -5,9 +5,11 @@ module.exports = {
     "padded-blocks": 0,
     "no-use-before-define": 0,
     "no-plusplus": 0,
+    "no-unused-vars": ["error", { "varsIgnorePattern": "setup|draw" }]
     // "array-element-newline": 0
   },
   globals: {
+    window: true,
     remove: true,
     canvas: true,
     width: true,
