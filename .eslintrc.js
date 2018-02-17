@@ -5,7 +5,10 @@ module.exports = {
     "padded-blocks": 0,
     "no-use-before-define": 0,
     "no-plusplus": 0,
-    "no-unused-vars": ["error", { "varsIgnorePattern": "setup|draw" }]
+    "no-mixed-operators": 0,
+    "no-unused-vars": ["error", {
+      "varsIgnorePattern": "setup|draw|mousePressed|keyPressed"
+    }]
     // "array-element-newline": 0
   },
   globals: {
