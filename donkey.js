@@ -17,22 +17,22 @@ const foodLocations = [{
 
 
 function setup() {
-
-
   createCanvas(500, 500);
   ellipseMode(CENTER);
   noStroke();
   background(50, 50, 50);
 }
 
+
 function draw() {
+
   for (let i = 0; i < 100; i++) {
     step();
   }
 }
 
 function step() {
-
+  // background(50);
   // draw food
   fill(255);
   foodLocations.forEach((loc) => {
