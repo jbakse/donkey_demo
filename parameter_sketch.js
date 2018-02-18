@@ -1,12 +1,8 @@
-let r1Slider;
-let r2Slider;
-let turn1Slider;
 let turn2Slider;
 let a1 = 0;
 let a2 = 0;
 
-let brightSlider;
-let sizeSlider;
+
 let noiseStrengthSlider;
 let noiseSpeedSlider;
 
@@ -14,22 +10,12 @@ let noiseSpeedSlider;
 
 function setup() {
   createCanvas(500, 500);
-  createP('r1');
-  r1Slider = createSlider(0, 1000, 750);
-  createP('r2');
-  r2Slider = createSlider(0, 1000, 600);
-  createP('turn1');
-  turn1Slider = createSlider(0, 1000, 100);
-  createP('turn2');
-  turn2Slider = createSlider(0, 1000, 750);
 
-  createP('bright');
-  brightSlider = createSlider(0, 1000, 50);
-  createP('size');
-  sizeSlider = createSlider(0, 1000, 100);
+  createP('turn2');
+  turn2Slider = createSlider(1, 21, 9);
 
   createP('noiseStrength');
-  noiseStrengthSlider = createSlider(0, 1000, 25);
+  noiseStrengthSlider = createSlider(0, 1000, 500);
   createP('noiseSpeed');
   noiseSpeedSlider = createSlider(0, 1000, 10);
 
@@ -39,6 +25,8 @@ function setup() {
   noStroke();
   blendMode(ADD);
   colorMode(HSB, 1);
+
+  noiseDetail(1);
 }
 
 function mousePressed() {
@@ -47,54 +35,53 @@ function mousePressed() {
 }
 
 function draw() {
-
+  const noiseStrength = map(noiseStrengthSlider.value(), 0, 1000, 0, .1);
+  const noiseSpeed = map(noiseSpeedSlider.value(), 0, 1000, 0, 0.5);
 
   for (let i = 0; i < 1000; i++) {
-    step();
+    step(0, noiseStrength, noiseSpeed, 10.0);
+    step(0.25, noiseStrength, noiseSpeed, 10.05);
+    step(0.5, noiseStrength, noiseSpeed, 10.1);
+    step(0.75, noiseStrength, noiseSpeed, 10.15);
+
   }
 }
 
-function step() {
-  const r1 = map(r1Slider.value(), 0, 1000, 0, 100);
-  let r2 = map(r2Slider.value(), 0, 1000, 0, 100);
+function step(c, noiseStrength, noiseSpeed, noiseZ) {
+  const size = 1;
+  const bright = 0.1;
+  const r1 = 250;
+  const r2 = 50;
+  const turn1 = 0.001;
+  const turn2 = turn1 * turn2Slider.value();
 
-  r2 *= noise(millis() * .001) * 2;
-  const turn1 = map(turn1Slider.value(), 0, 1000, 0, 0.01);
-  let turn2 = map(turn2Slider.value(), 0, 1000, 0, 0.01);
-
-  turn2 = floor(turn2 / turn1) * turn1;
-  const size = map(sizeSlider.value(), 0, 1000, 1, 10);
-  const bright = map(brightSlider.value(), 0, 1000, 0, 0.1);
-  const noiseStrength = map(noiseStrengthSlider.value(), 0, 1000, 0, 100);
-  const noiseSpeed = map(noiseSpeedSlider.value(), 0, 1000, 0, 0.5);
+  let x = 250;
+  let y = 250;
 
   a1 += turn1;
+  const noisyA1 = a1 + noise(a1 * noiseSpeed, noiseZ) * noiseStrength;
+  const noiseR1 = r1 * (noise(a1 * noiseSpeed, noiseZ) + 0.25);
+  x += sin(noisyA1) * noiseR1;
+  y -= cos(noisyA1) * noiseR1;
+
   a2 += turn2;
-
-  const a2Noisy = a2 + noise(frameCount * noiseSpeed) * noiseStrength;
-  const a1Noisy = a1 + noise(frameCount * noiseSpeed, 1000) * noiseStrength;
-
-  let x = width * 0.5;
-  let y = height * 0.5;
-
-
-  x += sin(a1Noisy) * r1;
-  y -= cos(a1Noisy) * r1;
-
-  x += sin(a2Noisy) * r2;
-  y -= cos(a2Noisy) * r2;
-
+  const noisyA2 = a2 + noise(a1 * noiseSpeed, noiseZ) * noiseStrength;
+  const noiseR2 = r2 * (noise(a1 * noiseSpeed * 1000, noiseZ) + .25);
+  x += sin(noisyA2) * noiseR2;
+  y -= cos(noisyA2) * noiseR2;
 
   colorMode(HSB, 1);
   blendMode(ADD);
-  fill(0, 1, bright);
+  fill(c, 1, bright);
   ellipse(x, y, size, size);
+
 }
 
 
-// history https://jsbin.com/jibuvuvesi/edit?js,output
-// history https://jsbin.com/munecawaqo/edit?js,output
-
+// [version 1](https://jsbin.com/jibuvuvesi/edit?js,output)
+// [version 2](https://jsbin.com/munecawaqo/edit?js,output)
+// [version 3](https://jsbin.com/zasosuyadi/edit?js,output)
+// [version 4](https://jsbin.com/juviqopive/edit?js,output)
 
 function keyPressed() {
   if (key === 'S') {
