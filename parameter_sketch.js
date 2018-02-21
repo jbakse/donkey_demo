@@ -35,7 +35,7 @@ function mousePressed() {
 }
 
 function draw() {
-  const noiseStrength = map(noiseStrengthSlider.value(), 0, 1000, 0, .1);
+  const noiseStrength = map(noiseStrengthSlider.value(), 0, 1000, 0, 0.1);
   const noiseSpeed = map(noiseSpeedSlider.value(), 0, 1000, 0, 0.5);
 
   for (let i = 0; i < 1000; i++) {
@@ -66,7 +66,7 @@ function step(c, noiseStrength, noiseSpeed, noiseZ) {
 
   a2 += turn2;
   const noisyA2 = a2 + noise(a1 * noiseSpeed, noiseZ) * noiseStrength;
-  const noiseR2 = r2 * (noise(a1 * noiseSpeed * 1000, noiseZ) + .25);
+  const noiseR2 = r2 * (noise(a1 * noiseSpeed * 1000, noiseZ) + 0.25);
   x += sin(noisyA2) * noiseR2;
   y -= cos(noisyA2) * noiseR2;
 
