@@ -7,9 +7,13 @@ module.exports = {
     "no-plusplus": 0,
     "no-mixed-operators": 0,
     "one-var": 0,
+    "object-shorthand": 0,
     "one-var-declaration-per-line": 0,
+    "no-param-reassign": ["error", {
+      "props": false
+    }],
     "no-unused-vars": ["error", {
-      "varsIgnorePattern": "setup|draw|mousePressed|keyPressed"
+      "varsIgnorePattern": "setup|draw|mousePressed|keyPressed|preload"
     }]
     // "array-element-newline": 0
   },
