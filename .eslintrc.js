@@ -14,7 +14,8 @@ module.exports = {
     }],
     "no-unused-vars": ["error", {
       "varsIgnorePattern": "setup|draw|mousePressed|keyPressed|preload"
-    }]
+    }],
+    "no-floating-decimal": 0,
     // "array-element-newline": 0
   },
   globals: {
