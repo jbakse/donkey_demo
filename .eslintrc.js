@@ -16,6 +16,7 @@ module.exports = {
       "varsIgnorePattern": "setup|draw|mousePressed|keyPressed|preload"
     }],
     "no-floating-decimal": 0,
+    "prefer-destructuring": 0,
     // "array-element-newline": 0
   },
   globals: {
