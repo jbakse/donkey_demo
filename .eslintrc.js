@@ -17,6 +17,9 @@ module.exports = {
     }],
     "no-floating-decimal": 0,
     "prefer-destructuring": 0,
+    "max-len": ["warn", {
+      code: 128
+    }],
     // "array-element-newline": 0
   },
   globals: {
