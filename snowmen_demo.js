@@ -48,6 +48,10 @@ function setup() {
     sprite.step = stepSnowman;
     sprite.x = random(0, 500);
     sprite.y = random(0, 500);
+    sprite.dX = random(3, 6);
+    sprite.dY = random(3, 6);
+    sprite.cargo = undefined;
+    sprite.cooldown = 0;
     sprites.push(sprite);
   }
 
@@ -62,9 +66,11 @@ function draw() {
   // we can call the .step function on every object but get different results for
   // trees and snowman.
   // we get different results because the .step function is different on trees and snowmen
-  sprites.forEach((sprite) => {
-    sprite.step();
-  });
+  for (let i = 0; i < 1; i++) {
+    sprites.forEach((sprite) => {
+      sprite.step();
+    });
+  }
 
   // sort!
   // the array.sort() function takes a function as a parameter
@@ -89,8 +95,59 @@ function draw() {
 // when you call it that way this will be the object itself
 
 function stepSnowman() {
-  this.x += noise(this.id, 0, frameCount * 0.01) - 0.25;
-  this.y += noise(this.id, 1, frameCount * 0.01) - 0.25;
+  this.x += this.dX;
+  this.y += this.dY;
+  if (this.x < 0) {
+    this.dX = abs(this.dX);
+  }
+  if (this.x > width) {
+    this.dX = -abs(this.dX);
+  }
+  if (this.y < 0) {
+    this.dY = abs(this.dY);
+  }
+  if (this.y > height) {
+    this.dY = -abs(this.dY);
+  }
+
+  let foundTree = undefined;
+
+  sprites.forEach((otherSprite) => {
+    if (otherSprite.type === 'snowman') {
+      return;
+    }
+    if (otherSprite === this.cargo) {
+      return;
+    }
+    if (dist(this.x, this.y, otherSprite.x, otherSprite.y) < 10) {
+      foundTree = otherSprite;
+    }
+  });
+
+  var hasCargo = this.cargo !== undefined;
+
+  if (foundTree && hasCargo) {
+    this.cargo = undefined;
+    this.cooldown = 50;
+  }
+
+  if (foundTree && !hasCargo) {
+    if (this.cooldown === 0) {
+      this.cargo = foundTree;
+    }
+  }
+
+
+  if (this.cargo) {
+    this.cargo.x = this.x - 3;
+    this.cargo.y = this.y - 5;
+  }
+
+  if (this.cooldown > 0) {
+    this.cooldown--;
+  }
+
+
 }
 
 function stepTree() {
@@ -103,6 +160,8 @@ function drawSnowman() {
   // won't leak to other parts of the program
   push();
   translate(this.x, this.y - 12);
+  let drawScale = map(this.y, 0, height, 1, 2);
+  // scale(drawScale);
   imageMode(CENTER);
   image(spriteSheet, 0, 0, 16, 24, 0, 0, 16, 24);
   pop();
@@ -111,6 +170,8 @@ function drawSnowman() {
 function drawTree() {
   push();
   translate(this.x, this.y - 12);
+  let drawScale = map(this.y, 0, height, 1, 2);
+  // scale(drawScale);
   imageMode(CENTER);
   image(spriteSheet, 0, 0, 16, 24, 16, 0, 16, 24);
   pop();
