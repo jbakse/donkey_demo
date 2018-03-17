@@ -1,5 +1,5 @@
 // require https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js
-// https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js
+// require https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/addons/p5.dom.min.js
 
 // sliders
 let moldGens;
@@ -44,7 +44,6 @@ function draw() {
   // load the pixels
   srcImage.loadPixels();
   scratchImage.loadPixels();
-
 
   // grow mold
   for (let i = 0; i < moldGens.value(); i++) {
