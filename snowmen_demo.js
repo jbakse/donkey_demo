@@ -110,7 +110,7 @@ function stepSnowman() {
     this.dY = -abs(this.dY);
   }
 
-  let foundTree = undefined;
+  let foundTree = false;
 
   sprites.forEach((otherSprite) => {
     if (otherSprite.type === 'snowman') {
@@ -124,7 +124,7 @@ function stepSnowman() {
     }
   });
 
-  var hasCargo = this.cargo !== undefined;
+  const hasCargo = this.cargo !== undefined;
 
   if (foundTree && hasCargo) {
     this.cargo = undefined;
@@ -160,7 +160,7 @@ function drawSnowman() {
   // won't leak to other parts of the program
   push();
   translate(this.x, this.y - 12);
-  let drawScale = map(this.y, 0, height, 1, 2);
+  const drawScale = map(this.y, 0, height, 1, 2);
   // scale(drawScale);
   imageMode(CENTER);
   image(spriteSheet, 0, 0, 16, 24, 0, 0, 16, 24);
@@ -170,7 +170,7 @@ function drawSnowman() {
 function drawTree() {
   push();
   translate(this.x, this.y - 12);
-  let drawScale = map(this.y, 0, height, 1, 2);
+  const drawScale = map(this.y, 0, height, 1, 2);
   // scale(drawScale);
   imageMode(CENTER);
   image(spriteSheet, 0, 0, 16, 24, 16, 0, 16, 24);
