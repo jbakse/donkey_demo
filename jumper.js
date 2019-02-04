@@ -15,6 +15,8 @@ class Dispatcher {
     this.listeners[event].forEach(callback => callback(...data));
   }
 }
+
+
 const gameDispatcher = new Dispatcher();
 gameDispatcher.on('test', (...args) => {
   console.log('test', ...args)
