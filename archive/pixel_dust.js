@@ -1,9 +1,9 @@
 // require https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js
 
-const margin = .2;
-const margin2 = .1;
-const noiseFreq = .005;
-const noiseAmp = 100;
+const margin = 0.2;
+const margin2 = 0.1;
+const noiseFreq = 0.005;
+const noiseAmp = 200;
 
 let srcImage;
 let scratchImage;
@@ -18,7 +18,7 @@ function setup() {
   pixelDensity(1);
   srcImage = createGraphics(1000, 1000);
   scratchImage = createGraphics(1000, 1000);
-  noiseDetail(2, .5);
+  noiseDetail(2, 0.5);
   noLoop();
   noiseDetail(1);
 }
@@ -33,9 +33,19 @@ function draw() {
   srcImage.fill(255);
   const marginPixels = margin * srcImage.width;
   const margin2Pixels = margin2 * srcImage.width;
-  srcImage.rect(marginPixels, marginPixels, srcImage.width - marginPixels, srcImage.width - marginPixels);
+  srcImage.rect(
+    marginPixels,
+    marginPixels,
+    srcImage.width - marginPixels,
+    srcImage.width - marginPixels
+  );
   srcImage.fill(0);
-  srcImage.rect(marginPixels + margin2Pixels, marginPixels + margin2Pixels, srcImage.width - marginPixels - margin2Pixels, srcImage.width - marginPixels - margin2Pixels);
+  srcImage.rect(
+    marginPixels + margin2Pixels,
+    marginPixels + margin2Pixels,
+    srcImage.width - marginPixels - margin2Pixels,
+    srcImage.width - marginPixels - margin2Pixels
+  );
 
   // load the pixels
   srcImage.loadPixels();
@@ -48,7 +58,8 @@ function draw() {
       //   const offsetX = noiseInt(x * noiseFreq, y * noiseFreq, 0, -fuzz, fuzz);
       //   const offsetY = noiseInt(x * noiseFreq, y * noiseFreq, 1, -fuzz, fuzz);
 
-      const fuzz = noise(x * noiseFreq, y * noiseFreq, frameCount * .1) * noiseAmp;
+      const fuzz =
+        noise(x * noiseFreq, y * noiseFreq, frameCount * 0.1) * noiseAmp;
       const offsetX = randomInt(-fuzz, fuzz);
       const offsetY = randomInt(-fuzz, fuzz);
 
@@ -66,7 +77,6 @@ function draw() {
   image(scratchImage, 0, 0, width, height);
 }
 
-
 function randomInt(a, b) {
   return floor(random(a, b));
 }
@@ -76,13 +86,11 @@ function randomInt(a, b) {
 //   return floor(map(noise(x, y, z), 0, .5, a, b));
 // }
 
-
 function clamp(value, minimum, maximum) {
   if (value < minimum) return minimum;
   if (value > maximum) return maximum;
   return value;
 }
-
 
 function setPixel(img, x, y, color) {
   const clampX = clamp(x, 0, img.width - 1);
@@ -98,7 +106,6 @@ function setPixel(img, x, y, color) {
   img.pixels[i + 3] = color[3];
 }
 
-
 function getPixel(img, x, y) {
   const clampX = clamp(x, 0, img.width - 1);
   const clampY = clamp(y, 0, img.height - 1);
@@ -110,13 +117,12 @@ function getPixel(img, x, y) {
     img.pixels[i],
     img.pixels[i + 1],
     img.pixels[i + 2],
-    img.pixels[i + 3],
+    img.pixels[i + 3]
   ];
 }
 
-
 function keyPressed() {
-  if (key === 'S') {
-    save('canvas.jpg');
+  if (key === "S") {
+    save("canvas.jpg");
   }
 }

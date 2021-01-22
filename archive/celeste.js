@@ -15,10 +15,9 @@ const wall = 100;
 const mold = 200;
 const moldEdge = 255;
 
-
 function setup() {
   noiseDetail(2);
-  createCanvas(500, 500);
+  createCanvas(1500, 1500);
 
   noiseDetail(1);
   noLoop();
@@ -34,7 +33,6 @@ function setup() {
   moldChance.input(() => redraw());
 }
 
-
 function draw() {
   background(150, 0, 0);
 
@@ -47,11 +45,24 @@ function draw() {
 
   // grow mold
   for (let i = 0; i < moldGens.value(); i++) {
-    moldEdges(srcImage, scratchImage, empty, [mold, mold, mold, 255], 1, moldChance.value() / 100);
+    moldEdges(
+      srcImage,
+      scratchImage,
+      empty,
+      [mold, mold, mold, 255],
+      1,
+      moldChance.value() / 100,
+    );
   }
 
   // outer mold
-  moldEdges(srcImage, scratchImage, empty, [moldEdge, moldEdge, moldEdge, 255], 1);
+  moldEdges(
+    srcImage,
+    scratchImage,
+    empty,
+    [moldEdge, moldEdge, moldEdge, 255],
+    1,
+  );
 
   // colorize
   for (let y = 0; y < srcImage.width; y++) {
@@ -62,7 +73,7 @@ function draw() {
       } else if (p === wall) {
         setPixel(srcImage, x, y, [45, 20, 0, 255]);
       } else if (p === mold) {
-        if (random() < .8) {
+        if (random() < 0.8) {
           setPixel(srcImage, x, y, [20, 20, 20, 255]);
         } else {
           setPixel(srcImage, x, y, [50, 50, 150, 255]);
@@ -80,9 +91,9 @@ function draw() {
   moldEdges(srcImage, scratchImage, 45, [100, 60, 20, 255]);
 
   // fuzzy stroke room
-  moldEdges(srcImage, scratchImage, 40, [0, 0, 0, 255], 15, .5);
-  moldEdges(srcImage, scratchImage, 40, [0, 0, 0, 255], 15, .5);
-  moldEdges(srcImage, scratchImage, 40, [0, 0, 0, 255], 15, .5);
+  moldEdges(srcImage, scratchImage, 40, [0, 0, 0, 255], 15, 0.5);
+  moldEdges(srcImage, scratchImage, 40, [0, 0, 0, 255], 15, 0.5);
+  moldEdges(srcImage, scratchImage, 40, [0, 0, 0, 255], 15, 0.5);
 
   // done with the pixeling
   srcImage.updatePixels();
@@ -103,7 +114,7 @@ function moldEdges(src, scratch, emptyR, c, spread = 1, chance = 1) {
       const b = getPixel(src, x, y + spread)[0];
       const isEdge = p !== l || p !== r || p !== t || p !== b;
 
-      if (isEdge && (p === emptyR) && (random() < chance)) {
+      if (isEdge && p === emptyR && random() < chance) {
         setPixel(scratch, x, y, c);
       } else {
         setPixel(scratch, x, y, getPixel(src, x, y));
@@ -116,18 +127,17 @@ function moldEdges(src, scratch, emptyR, c, spread = 1, chance = 1) {
   src.loadPixels();
 }
 
-function drawMap(img) {
-  const blockSize = img.width / 10;
+function drawMap(img, res = 30) {
+  const blockSize = img.width / res;
   img.background(empty);
   img.fill(wall);
   img.noStroke();
-  for (let i = 0; i < 20; i++) {
-    const x = noiseInt(i, 1, 0, 1, 10) * blockSize;
-    const y = noiseInt(i, 2, 0, 1, 10) * blockSize;
+  for (let i = 0; i < 2 * res; i++) {
+    const x = noiseInt(i, 1, 0, 1, res) * blockSize;
+    const y = noiseInt(i, 2, 0, 1, res) * blockSize;
     img.rect(x, y, blockSize, blockSize);
   }
 }
-
 
 // function randomInt(a, b) {
 //   return floor(random(a, b));
@@ -135,16 +145,14 @@ function drawMap(img) {
 
 function noiseInt(x, y, z, a, b) {
   noiseDetail(1);
-  return floor(map(noise(x, y, z), 0, .5, a, b));
+  return floor(map(noise(x, y, z), 0, 0.5, a, b));
 }
-
 
 function clamp(value, minimum, maximum) {
   if (value < minimum) return minimum;
   if (value > maximum) return maximum;
   return value;
 }
-
 
 function setPixel(img, x, y, color) {
   const clampX = clamp(x, 0, img.width - 1);
@@ -160,7 +168,6 @@ function setPixel(img, x, y, color) {
   img.pixels[i + 3] = color[3];
 }
 
-
 function getPixel(img, x, y) {
   const clampX = clamp(x, 0, img.width - 1);
   const clampY = clamp(y, 0, img.height - 1);
@@ -175,7 +182,6 @@ function getPixel(img, x, y) {
     img.pixels[i + 3],
   ];
 }
-
 
 function keyPressed() {
   if (key === 'S') {
