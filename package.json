@@ -8,5 +8,7 @@
   },
   "author": "Justin Bakse",
   "license": "UNLICENSED",
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^7.18.0"
+  }
 }
